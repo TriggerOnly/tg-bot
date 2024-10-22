@@ -1,10 +1,18 @@
 import React from 'react';
 import './ProductList.css'
+import { useNavigate } from 'react-router-dom';
+import Button from '../Button/Button';
 
 const ProductList = () => {
+    const navigate = useNavigate();
+    
+    const handleNavigate = () => {
+        navigate('/form');
+    };
+
     return (
         <div>
-            Пролуктовый лист
+            <Button onClick={handleNavigate}>Заполнить форму</Button>
         </div>
     );
 };
