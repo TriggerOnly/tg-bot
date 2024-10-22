@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import './Form.css'
 
 const Form = () => {
-    count [country, setCountry] = useState('')
-    count [street, setStreet] = useState('')
-    count [subject, setSubject] = useState('physical')
+    const [country, setCountry] = useState('')
+    const [street, setStreet] = useState('')
+    const [subject, setSubject] = useState('physical')
 
     const onChangeCountry = (e) => {
         setCountry(e.target.value)
