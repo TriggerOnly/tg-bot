@@ -12,11 +12,17 @@ const Form = () => {
         if (!tg) {
             console.error("Telegram Web App is not initialized.");
             return;
-        }
+        }  
 
-        tg.ready(); // Убедитесь, что веб-приложение готово
+        tg.ready(); 
 
         if (tg.MainButton) {
+            tg.MainButton.setParams({
+                text: 'Отправить данные',
+            });
+        }
+
+        if (tg.MainButton) { 
             tg.MainButton.setParams({
                 text: 'Отправить данные',
             });
