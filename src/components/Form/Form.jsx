@@ -6,7 +6,7 @@ const Form = () => {
     const [country, setCountry] = useState('');
     const [street, setStreet] = useState('');
     const [subject, setSubject] = useState('physical');
-    const { tg } = useTelegram(); // Извлекаем объект tg из хука
+    const { tg } = useTelegram(); 
 
     const onSendData = useCallback(() => {
         const data = {
