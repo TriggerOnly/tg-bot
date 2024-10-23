@@ -2,7 +2,6 @@ const tg = window.Telegram.WebApp;
 
 if (!tg) {
     console.error("Telegram Web App is not initialized.");
-    return;
 }
 
 export const useTelegram = () => {

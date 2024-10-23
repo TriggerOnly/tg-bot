@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import './Form.css';
 import { useTelegram } from '../../hooks/useTelegram';
 
@@ -6,7 +6,23 @@ const Form = () => {
     const [country, setCountry] = useState('');
     const [street, setStreet] = useState('');
     const [subject, setSubject] = useState('physical');
-    const tg = useTelegram();
+    const { tg } = useTelegram(); // Извлекаем объект tg из хука
+
+    const onSendData = useCallback(() => {
+        const data = {
+            country, 
+            street,
+            subject
+        }
+        tg.sendData(JSON.stringify(data))
+    }, [])
+
+    useEffect(() => {
+        tg.WebApp.onEvent('mainButtonClicked', onSendData)
+        return () => {
+            tg.WebApp.onEvent('mainButtonClicked', onSendData)
+        }
+    }, [])
 
     useEffect(() => {
         if (!tg) {
@@ -14,28 +30,26 @@ const Form = () => {
             return;
         }  
 
-        tg.ready(); 
+        tg.ready();
 
         if (tg.MainButton) {
             tg.MainButton.setParams({
                 text: 'Отправить данные',
             });
-        }
-
-        if (tg.MainButton) { 
-            tg.MainButton.setParams({
-                text: 'Отправить данные',
-            });
+        } else {
+            console.error("MainButton is not available on tg.");
         }
     }, [tg]);
 
     useEffect(() => {
-        if (!country || !street) {
-            tg.MainButton.hide();
-        } else {
-            tg.MainButton.show();
+        if (tg.MainButton) {
+            if (!country || !street) {
+                tg.MainButton.hide();
+            } else {
+                tg.MainButton.show();
+            }
         }
-    }, [country, street, tg]); // Добавление tg в зависимости
+    }, [country, street, tg]);
 
     const onChangeCountry = (e) => {
         setCountry(e.target.value);
@@ -57,18 +71,18 @@ const Form = () => {
                 type='text' 
                 placeholder={'Страна'}
                 value={country}
-                onChange={onChangeCountry} // Исправлено
+                onChange={onChangeCountry}
             />
             <input 
                 className={'input'} 
                 type='text' 
                 placeholder={'Улица '}
                 value={street}
-                onChange={onChangeStreet} // Исправлено
+                onChange={onChangeStreet}
             />
             <select 
                 value={subject} 
-                onChange={onChangeSubject} // Исправлено
+                onChange={onChangeSubject}
                 className={'select'}
             >
                 <option value={'physical'}>Физическое лицо</option>
