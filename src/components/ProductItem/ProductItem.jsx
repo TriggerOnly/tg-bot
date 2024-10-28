@@ -3,7 +3,7 @@ import Button from '../Button/Button'
 import './ProductItem.css'
 
 const ProductItem = ({product, className, onAdd}) => {
-    const onHandler = () => {
+    const onAddHandler = () => {
         onAdd(product)
     }
     
